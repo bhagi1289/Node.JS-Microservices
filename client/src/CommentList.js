@@ -1,25 +1,17 @@
-import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React from "react";
 
-export default ({postId})=>{
+export default ({comments})=>{
 
-    const [comments,  setComments] = useState([]);
-    const fetchData = async ()=>{
-        const res = await axios.get(`http://localhost:4001/posts/${postId}/comments`);
-        setComments(res.data);
+    if(comments && comments.length){
+        const renderedComments = comments.map(comment=>{
+            return <li key={comment.id}>{comment.content}</li>
+        });
+    
+        return(
+            <ul>
+                {renderedComments}
+            </ul>
+        )
+    }
 
-    };
-
-    useEffect(()=>{
-        fetchData();
-    }, []);
-    const renderedComments = comments.map(comment=>{
-        return <li key={comment.id}>{comment.content}</li>
-    });
-
-    return(
-        <ul>
-            {renderedComments}
-        </ul>
-    )
 }
